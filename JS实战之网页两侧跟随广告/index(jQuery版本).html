@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>两侧广告跟随</title>
+    <style>
+        body {
+            height: 5000px;
+        }
+
+        .left {
+            position: absolute;
+            left: 0;
+            top: 80px;
+        }
+
+        .right {
+            position: absolute;
+            right: 0;
+            top: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="left" id="left" src="images/1.gif" alt="">
+    <img class="right" id="right" src="images/2.gif" alt="">
+</body>
+</html>
+<script src="../jquery-3.4.1.min.js"></script>
+<script>
+    $(function(){
+        $(window).scroll(function(){
+            $("#left,#right").stop().animate({"top": 80 + $(document).scrollTop()}, 800); 
+        })
+        
+    })
+</script>

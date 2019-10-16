@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>自定义滚动条</title>
+	<style type="text/css">
+		.box {
+			width: 300px;
+			height: 600px;
+			border: 1px solid #ccc;
+			margin: 100px auto;
+			position: relative;
+			overflow: hidden;
+		}
+		.bg-slider {
+			width: 15px;
+			height: 602px;
+			background-color: #ddd;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		.slider-bar {
+			width: 15px;
+			height: 100px;
+			background-color: #7D7D7D;
+			position: absolute;
+			right: 0;
+			top: 0;
+			border-radius: 8px;
+			cursor: pointer;
+		}
+
+		.text-content {
+			width: 280px;
+			position: absolute;
+			left: 5px;
+			top: 0;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			function $(id) {return document.getElementById(id);}
+
+			var box = $("box");
+			var bg_slider = $("bg_slider");
+			var slider_bar = $("slider_bar");
+			var text_content = $("text_content");
+
+			// 计算滚动条的高度
+			var scroll_barH = box.offsetHeight / box.scrollHeight * box.offsetHeight;
+			slider_bar.style.height = scroll_barH + "px";
+
+			// 滑动
+			slider_bar.onmousedown = function(event){
+				var event = event || window.event;
+				// 计算鼠标点击的位置距离滚动条顶部的距离
+				var top_margin = event.clientY - box.offsetTop - this.offsetTop;
+
+				document.onmousemove = function(event){
+					var event = event || window.event;
+					// 计算滑块的位置
+					var slider_top = event.clientY - box.offsetTop - top_margin;
+					slider_top <= 0 ? slider_top = 0 : null;
+					slider_top >= (bg_slider.offsetHeight - slider_bar.offsetHeight) ? slider_top = bg_slider.offsetHeight - slider_bar.offsetHeight : null;
+					slider_bar.style.top = slider_top + "px";
+
+					// 计算文字滑动距离
+					var text_top = slider_top/bg_slider.offsetHeight * text_content.scrollHeight;
+					text_content.style.top = -text_top + "px";
+
+					// 防止滑动过程中选中文字
+					window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+				}
+
+				document.onmouseup = function(){
+					document.onmousemove = null;
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="box" id="box">
+		<div class="bg-slider" id="bg_slider"></div>
+		<div class="slider-bar" id="slider_bar"></div>
+		<div class="text-content" id="text_content">
+			可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容可滚动文本内容
+		</div>
+	</div>
+</body>
+</html>

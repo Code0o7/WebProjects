@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>仿淘宝图片放大镜</title>
+	<style type="text/css">
+		.box {
+			width: 919px;
+			height: 512px;
+			margin: 100px auto;
+		}
+
+		.small-pic {
+			width: 400px;
+			height: 400px;
+			background: url(images/001.jpg) no-repeat;
+			border: 1px solid #ccc;
+			margin: 5px;
+			cursor: move;
+			position: relative;
+		}
+
+		.mask {
+			display: none;
+			width: 100px;
+			height: 100px;
+			background-color: rgba(0,255,0,0.4);
+			position: absolute;
+		}
+
+		.big-pic {
+			position: absolute;
+			width: 500px;
+			height: 500px;
+			left: 405px;
+			border: 1px solid #ccc;
+			background: url(images/0001.jpg) no-repeat;
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="box" id="box">
+		<div class="small-pic" id="small_pic">
+			<div class="mask" id="mask"></div>
+			<div class="big-pic" id="big_pic"></div>
+		</div>
+		
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	var small_pic = document.getElementById("small_pic");
+	var big_pic = document.getElementById("big_pic");
+	var mask = document.getElementById("mask");
+
+	// 鼠标移动到图片内
+	small_pic.onmouseover = function(){
+		mask.style.display = "block";
+		big_pic.style.display = "block";
+	}
+
+	// 鼠标移除图片
+	small_pic.onmouseout = function(){
+		mask.style.display = "none";
+		big_pic.style.display = "none";
+	}
+
+	// 鼠标移动
+	small_pic.onmousemove = function(event){
+		var event = event || window.event;
+
+		// 计算mask位置
+		var left = event.clientX - this.offsetLeft - mask.offsetWidth/2;
+		var top = event.clientY - this.offsetTop - mask.offsetHeight/2;
+		left <= 0 ? left = 0 : null;
+		left >= (this.offsetWidth - mask.offsetWidth) ? left = (this.offsetWidth - mask.offsetWidth) : null;
+		top <= 0 ? top = 0 : null;
+		top >= (this.offsetHeight - mask.offsetHeight) ? top = (this.offsetHeight - mask.offsetHeight) : null;
+		mask.style.left = left  + "px";
+		mask.style.top = top  + "px";
+
+		// 计算大图位置
+		var posLeft = left/400 * 800;
+		var posTop = top/400 * 800;
+		big_pic.style.backgroundPosition = -posLeft + "px" + " " + -posTop + "px";
+	}
+
+
+</script>

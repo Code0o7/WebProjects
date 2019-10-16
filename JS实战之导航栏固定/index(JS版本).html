@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>固定导航栏</title>
+	<style type="text/css">
+		img {
+			/*去掉图片下面默认的3像素*/
+			vertical-align: middle;
+		}
+
+		.box {
+			width: 1423px;
+			margin: 0 auto;
+		}
+
+		.top,.nav {
+			width: 1423px;
+			margin: 0 auto;
+		}
+
+		.content {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.fix {
+			position: fixed;
+			top: 0;
+		}
+	</style>
+	<script type="text/javascript" src="../Base.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			// 页面滚动
+			window.onscroll = function(){
+				var top = $("top");
+				var nav = $("nav");
+				var content =  document.getElementById("content");
+				var scroll_top = getWindowScroll().top;
+
+				if (scroll_top >= top.offsetHeight) {
+					nav.className = "nav fix";
+					content.style.marginTop = nav.offsetHeight + "px";
+				}else {
+					nav.className = "nav";
+					content.style.marginTop = "0px";
+				}
+				
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="box">
+		<div class="top" id="top">
+			<img src="images/top.png">
+		</div>
+		<div class="nav" id="nav">
+			<img src="images/nav.png">
+		</div>
+		<div class="content" id="content">
+			<img src="images/main.png">
+		</div>
+	</div>
+</body>
+</html>

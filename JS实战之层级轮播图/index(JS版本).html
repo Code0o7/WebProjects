@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>层级轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        img {
+            /* 去掉图片底部默认的3像素空隙 */
+            vertical-align: middle;
+        }
+
+        .box {
+            width: 650px;
+            height: 250px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box img {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .sequence {
+            position: absolute;
+            right: 0;
+            bottom: 10px;
+        }
+
+        .sequence li {
+            float: left;
+            position: relative;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            background-color: gray;
+            margin-right: 5px;
+            cursor: pointer;
+            border: 1px solid #fff;
+        }
+
+        .box .select {
+            bottom: 3px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <div id="images" class="images">
+                <img src="images/02.jpg" alt="">
+                <img src="images/03.jpg" alt="">
+                <img src="images/04.jpg" alt="">
+                <img src="images/05.jpg" alt="">
+                <img src="images/01.jpg" alt="">
+        </div>
+        <div id="sequence" class="sequence">
+            <ul>
+                <li class="select">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../Base.js"></script>
+<script>
+    window.onload = function(){
+        // 当前选中的索引
+        var current_select = 0;
+
+        // 鼠标移动经过序号
+        var lis = document.getElementsByTagName("li");
+
+        // 所有的图片节点
+        var images = document.getElementsByTagName("img");
+
+        for(var i = 0; i < lis.length; i++ ){
+            // 记录索引
+            lis[i].index = i;
+
+            lis[i].onmouseover = function(){
+                // 如果是已经选中了的 什么也不做
+                if(current_select == this.index) return;
+
+                // 移除所有的li classname select
+                for(var j = 0; j < lis.length;j++ ){
+                    lis[j].className = "";
+                }
+
+                // 设置当前li class select
+                this.className = "select";
+
+                // 设置图片 找到要移动的图片
+                var cur_img = null;
+                for(var k = 0; k < images.length; k++ ){
+                    var imageName = images[k].src;
+                    imageName = imageName.split("/").pop();
+                    imageName = parseInt(imageName.split(".").shift());
+
+                    if(imageName == this.index + 1){
+                        cur_img = images[k];
+                    }
+                }
+
+                // 图片移动
+                $("images").removeChild(cur_img);
+                $("images").appendChild(cur_img);
+                cur_img.style.left = "650px";
+                
+                // 动画
+                slowAnimate(cur_img,{left: "0"});
+
+                // 记录当前选中的索引
+                current_select = this.index;
+            }
+        }
+    }
+</script>

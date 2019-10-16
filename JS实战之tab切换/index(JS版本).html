@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tab切换</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        
+
+        .box {
+            width: 1000px;
+            height: 510px;
+            margin: 150px auto;
+            position: relative;
+        }
+
+        ul{
+            list-style: none;
+            width: 320px;
+            height: 35px;
+            border: 1px solid #ccc;
+            border-bottom: none;
+        }
+
+        ul li {
+            float: left;
+            width: 80px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        ul li span {
+            margin-left: 5px;
+            color: #ccc;
+        }
+
+        .flag {
+            width: 70px;
+            height: 5px;
+            background-color: red;
+            position: absolute;
+            left: 5px;
+            top: 0;
+        }
+
+        .images {
+            width: 1000px;
+            height: 475px;
+            position: relative;
+            border: 1px solid #ccc;
+        }
+        .images img {
+            position: absolute;
+            display: none;
+        }
+
+        .images .show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box">
+        <div class="flag" id="flag"></div>
+        <ul>
+            <li>国际大牌<span>|</span></li>
+            <li>国妆名牌<span>|</span></li>
+            <li>清洁用品<span>|</span></li>
+            <li>男士精品</li>
+        </ul>
+        <div class="images" id="images">
+                <img class="show" src="imgs/guojidapai.jpg" alt="">
+                <img src="imgs/guozhuangmingpin.jpg" alt="">
+                <img src="imgs/qingjieyongpin.jpg" alt="">
+                <img src="imgs/nanshijingpin.jpg" alt="">
+        </div>
+    </div>
+</body>
+</html>
+<script src="../Base.js"></script>
+<script>
+    window.onload = function(){
+        var tab_lis = $("box").getElementsByTagName("li");
+        var flag = $("flag");
+        var images = $("images").children;
+
+        // 循环遍历所有的li 添加mouseover事件
+        for(var i = 0; i < tab_lis.length; i++){
+            tab_lis[i].index = i;
+            tab_lis[i].onmouseover = function(){
+                // 遍历图片 先隐藏所有的
+                for(var j = 0; j < images.length; j++){
+                    images[j].style.display = "none";
+                }
+                
+                // 找到当前对应索引的image 显示
+                images[this.index].style.display = "block";
+
+                // 设置红色标志位置
+                flag.style.left = this.index * 80 + "px";
+            }
+        }
+
+    }
+</script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>两侧广告跟随</title>
+    <style>
+        body {
+            height: 5000px;
+        }
+
+        .left {
+            position: absolute;
+            left: 0;
+            top: 80px;
+        }
+
+        .right {
+            position: absolute;
+            right: 0;
+            top: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="left" id="left" src="images/1.gif" alt="">
+    <img class="right" id="right" src="images/2.gif" alt="">
+</body>
+</html>
+<script src="../Base.js"></script>
+<script>
+    window.onload = function(){
+        var images = document.getElementsByTagName("img");
+
+        // 网页滚动的时候设置图片top值
+        window.onscroll = function(){
+            // 获取浏览器滚动高度
+            var scroll_top = getWindowScroll().top;
+            
+
+            for(var i = 0; i < images.length; i++){
+                // 缓动动画移动两边广告
+                slowAnimate(images[i],{"top": 80 + scroll_top});
+            }
+        }
+    }
+</script>

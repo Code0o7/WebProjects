@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>固定导航栏</title>
+	<style type="text/css">
+		img {
+			/*去掉图片下面默认的3像素*/
+			vertical-align: middle;
+		}
+
+		.box {
+			width: 1423px;
+			margin: 0 auto;
+		}
+
+		.top,.nav {
+			width: 1423px;
+			margin: 0 auto;
+		}
+
+		.content {
+			width: 1000px;
+			margin: 0 auto;
+		}
+		.fix {
+			position: fixed;
+			top: 0;
+		}
+	</style>
+	<script type="text/javascript" src="../jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(window).scroll(function(){
+				if($(this).scrollTop() >= $("#top").height()){
+					// 固定导航栏
+					$("#nav").css({
+						"position":"fixed",
+						"top":"0"
+					});
+					// 设置底部上边距
+					$("#content").css("margin-top",$("#nav").height());
+				}else {
+					// 导航栏恢复
+					$("#nav").css("position","static");
+					// 去掉底部上边距
+					$("#content").css("margin-top","0");
+				}
+			})
+		})
+	</script>
+</head>
+<body>
+	<div class="box">
+		<div class="top" id="top">
+			<img src="images/top.png">
+		</div>
+		<div class="nav" id="nav">
+			<img src="images/nav.png">
+		</div>
+		<div class="content" id="content">
+			<img src="images/main.png">
+		</div>
+	</div>
+</body>
+</html>

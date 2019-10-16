@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>仿京东轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        img {
+            vertical-align: middle;
+        }
+        ul {
+            list-style: none;
+        }
+        .box {
+            width: 670px;
+            height: 240px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .images img {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .images .select {
+            opacity: 1;
+        }
+
+        .box ul {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .box li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            background-color: SlateBlue;
+            color: #fff;
+            font-size: 14px;
+            margin-left: 10px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .box .current {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <div class="images" id="images">
+            <img class="select" src="images/1.jpg" alt="">
+            <img src="images/2.jpg" alt="">
+            <img src="images/3.jpg" alt="">
+            <img src="images/4.jpg" alt="">
+            <img src="images/5.jpg" alt="">
+            <img src="images/6.jpg" alt="">
+        </div>
+        <ul>
+            <li class="current">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="../jquery-3.4.1.min.js"></script>
+<script>
+    $(function(){
+        // 鼠标经过序号
+        $("#box li").mouseenter(function(){
+            // 切换选中的序号
+            $(this).addClass("current").siblings("li").removeClass("current");
+
+            // 设置显示和消失图片
+            $("#images img").eq($(this).index()).fadeIn().siblings().fadeOut();
+        })
+    })
+</script>

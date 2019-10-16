@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>拖动水平进度条</title>
+	<style type="text/css">
+		.box {
+			width: 500px;
+			height: 200px;
+			margin: 150px auto;
+			
+		}
+
+		.bg-slider {
+			width: 500px;
+			height: 10px;
+			background-color: #CCC;
+			position: relative;
+		}
+
+		.up-slider {
+			width: 0;
+			height: 10px;
+			background-color: #406595;
+			
+		}
+
+		.drag-bar {
+			width: 10px;
+			height: 20px;
+			background-color: #406595;
+			position: absolute;
+			top: -5px;
+			left: 0;
+			cursor: pointer;
+		}
+		.slide-progress {
+			width: 500px;
+			height: 20px;
+			color: #ccc;
+			text-align: center;
+			margin-top: 15px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="bg-slider" id="bg_slider">
+			<div class="up-slider" id="up_slider"></div>
+			<div class="drag-bar" id="drag_bar"></div>
+		</div>
+		
+		<div class="slide-progress" id="slide_progress">0%</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	function $(id){return document.getElementById(id);}
+
+	var up_slider = $("up_slider");
+	var drag_bar = $("drag_bar");
+	var bg_slider = $("bg_slider");
+	var slide_progress = $("slide_progress");
+
+	// 拖动
+	drag_bar.onmousedown = function(){
+		var that = this;
+		document.onmousemove = function(event){
+			// 防止拖动过程中选择文本
+			window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+
+			// 计算滑动距离
+			var event = event || window.event;
+			var left = event.clientX - bg_slider.offsetLeft;
+
+			var v_left = left;
+			if (left <= that.offsetWidth/2) {
+				left = that.offsetWidth/2;
+				v_left = 0;
+			}else if (left >= bg_slider.offsetWidth - that.offsetWidth/2){
+				left = bg_slider.offsetWidth - that.offsetWidth/2;
+				v_left = bg_slider.offsetWidth;
+			} 
+			that.style.left = left - that.offsetWidth * 0.5 + "px";
+			up_slider.style.width = left + "px";
+
+			// 计算滑动百分比
+			
+			var progress = Math.ceil(v_left / bg_slider.offsetWidth * 100);
+			slide_progress.innerHTML = progress + "%";
+
+		}
+		document.onmouseup = function(){
+			document.onmousemove = null;
+		}
+	}
+</script>

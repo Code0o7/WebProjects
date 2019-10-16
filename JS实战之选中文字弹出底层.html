@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>选中文字弹出底层</title>
+	<style type="text/css">
+		div {
+			width: 400px;
+			height: auto;
+			margin-bottom: 30px;
+		}
+
+		.box1 {
+			position: relative;
+		}
+		.mask {
+			width: 100px;
+			height: 100px;
+			background-color: #ddd;
+			border: 1px solid #ccc;
+			position: absolute;
+			left: 0;
+			top: 0;
+			border-radius: 10px;
+			display: none;
+		}
+	</style>
+	<script type="text/javascript" src="Base.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			var box1 = $("box1");
+			var mask = $("mask");
+
+			box1.onmouseup = function(event){
+				showMask();
+
+				var event = event || window.event;
+				var mouseX = event.clientX - this.offsetLeft;
+				var mouseY = event.clientY - this.offsetTop;
+				mask.style.left = mouseX + "px";
+				mask.style.top = mouseY + "px";
+			}
+
+			document.onmousedown = function(event){
+				var event = event || window.event;
+				if (event.target.id != "box1") {
+					mask.style.display = "none";
+				}
+			}
+
+
+			// mask显示 隐藏
+			function showMask(){
+				var text = getWindowSelection();
+				if (text) {
+					mask.style.display = "block";
+				}else {
+					mask.style.display = "none";
+				}
+				
+				mask.innerHTML = text;
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="box1">
+		<div>
+			可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字
+			可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字
+			可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字可复制的文字
+		</div>
+		<div class="mask" id="mask"></div>
+	</div>
+	<div id="box2">
+		不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复制文字不可复
+	</div>
+</body>
+</html>

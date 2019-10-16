@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>跟随鼠标移动</title>
+	<style type="text/css">
+		body {
+			background-color: #fff;
+		}
+
+		img {
+			width: 100px;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<img src="img.jpg">
+</body>
+</html>
+<script type="text/javascript">
+	var img = document.getElementsByTagName("img")[0];
+	var leaderX = 0, leaderY = 0, targetX = 0, targetY = 0;
+	document.onclick = function(event){
+		var event = event || window.event;
+		
+		targetX = event.clientX - img.offsetWidth/2;
+		targetY = event.clientY - img.offsetHeight/2;
+	}
+
+	// 缓动动画
+	setInterval(function(){
+		leaderX = leaderX + (targetX - leaderX) / 10;
+		leaderY = leaderY + (targetY - leaderY) / 10;
+
+		img.style.left = leaderX + "px";
+		img.style.top = leaderY + "px";
+	},10)
+</script>

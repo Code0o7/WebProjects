@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>下拉菜单</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style-type: none;
+        }
+
+        .box {
+            width: 340px;
+            height: 30px;
+            margin: 200px auto;
+            background: url(imgs/bg.jpg) no-repeat;
+        }
+
+        .first li{
+            float: left;
+            cursor: pointer;
+        }
+
+        li {
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin-left: 10px;
+            background: url(imgs/libg.jpg) no-repeat;
+        }
+
+        .second {
+            display: none;
+        }
+
+        .second li {
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box">
+        <ul class="first" id="first">
+            <li>一级菜单1
+                <ul class="second">
+                    <li>二级菜单1</li>
+                    <li>二级菜单2</li>
+                    <li>二级菜单3</li>
+                </ul>
+            </li>
+            <li>一级菜单1
+                <ul class="second">
+                    <li>二级菜单1</li>
+                    <li>二级菜单2</li>
+                    <li>二级菜单3</li>
+                </ul>
+            </li>
+            <li>一级菜单1
+                <ul class="second">
+                    <li>二级菜单1</li>
+                    <li>二级菜单2</li>
+                    <li>二级菜单3</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+<script src="../Base.js"></script>
+<script>
+    window.onload = function(){
+        var first_lis = $("first").children;
+        for(var i = 0; i < first_lis.length; i++){
+            first_lis[i].onmouseover = function(){
+                this.children[0].style.display = "block";
+            }
+
+            first_lis[i].onmouseout = function(){
+                this.children[0].style.display = "none";
+            }
+        }
+
+    }
+</script>

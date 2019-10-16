@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>层级轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        img {
+            /* 去掉图片底部默认的3像素空隙 */
+            vertical-align: middle;
+        }
+
+        .box {
+            width: 650px;
+            height: 250px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box img {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .sequence {
+            position: absolute;
+            right: 0;
+            bottom: 10px;
+        }
+
+        .sequence li {
+            float: left;
+            position: relative;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            background-color: gray;
+            margin-right: 5px;
+            cursor: pointer;
+            border: 1px solid #fff;
+        }
+
+        .box .select {
+            bottom: 3px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <div id="images" class="images">
+                <img src="images/02.jpg" alt="">
+                <img src="images/03.jpg" alt="">
+                <img src="images/04.jpg" alt="">
+                <img src="images/05.jpg" alt="">
+                <img src="images/01.jpg" alt="">
+        </div>
+        <div id="sequence" class="sequence">
+            <ul>
+                <li class="select">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../jquery-3.4.1.min.js"></script>
+<script>
+    $(function(){
+        // 选中的索引
+        var $current_select = 0;
+
+        // 所有的图片
+        var $images = $("#images img");
+
+        // 鼠标经过序号
+        $("#sequence li").mouseenter(function(){
+            $(this).addClass("select").siblings().removeClass("select");
+
+            // 如果当前选中的索引不一样
+            if($current_select != $(this).index()){
+                // 对应序号的图片先快速移动到右边
+                var current_image = $("img[src='images/0" + ($(this).index() + 1) + ".jpg']");
+                $(current_image).css("left",650);
+
+                // 设置zindex
+                $("#images").remove($(current_image)).append($(current_image));
+                // $(current_image).addClass("current").siblings().removeClass("current");
+
+                // 动画
+                $(current_image).animate({"left":0},'slow');
+
+                // 记录当前选中的编号
+                $current_select = $(this).index();
+            }
+        })
+    })
+</script>

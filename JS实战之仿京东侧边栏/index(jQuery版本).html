@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>仿京东侧边栏</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+
+        .box {
+            width: 1210px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 侧边栏 */
+        .siderbar {
+            width: 38px;
+            height: 590px;
+            position: absolute;
+            top: 200px;
+            left: 1210px;
+        }
+
+        .siderbar .floors {
+            width: 38px;
+            height: 428px;
+            background: url("images/bg.png") no-repeat;
+        }
+
+        .siderbar .back-top {
+            width: 38px;
+            height: 50px;
+            background: url("images/bg.png") no-repeat left -540px;
+        }
+
+        .floor-list {
+            widows: 38px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .floor-list li{
+            width: 35px;
+            height: 35px;
+            border: 1px solid #ccc;
+            margin-bottom: 18px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .floor-list li p {
+            width: 35px;
+            height: 35px;
+            font-size: 12px;
+            color: red;
+            border: 1px solid red;
+            display: none;
+            text-align: center;
+            background-color: #ccc;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="box" id="box">
+        <!-- 侧边导航栏 -->
+        <div class="siderbar" id="siderbar">
+
+            <!-- 楼层 -->
+            <div class="floors" id="floors"></div>
+
+            <!-- 返回顶部 -->
+            <div class="back-top" id="back_top"></div>
+
+            <ul class="floor-list" id="floor_list">
+                <li>
+                    <p>家电通讯</p>
+                </li>
+                <li>
+                    <p>电脑数码</p>
+                </li>
+                <li>
+                    <p>服饰鞋包</p>
+                </li>
+                <li>
+                    <p>美容珠宝</p>
+                </li>
+                <li>
+                    <p>居家生活</p>
+                </li>
+                <li>
+                    <p>母婴玩具</p>
+                </li>
+                <li>
+                    <p>食品保健</p>
+                </li>
+                <li>
+                    <p>图书音像</p>
+                </li>
+                <li>
+                    <p>返回顶部</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 头部 -->
+        <div class="top" id="top">
+            <img src="images/top.png" alt="">
+        </div>
+
+        <!-- 1楼 家电通讯 -->
+        <div class="first-floor" id="first-floor">
+            <img src="images/jia.png" alt="">
+        </div>
+
+        <!-- 2楼 电脑数码 -->
+        <div class="second-floor" id="second_floor">
+            <img src="images/dian.png" alt="">
+        </div>
+
+        <!-- 3楼 服饰鞋包 -->
+        <div class="third-floor" id="third_floor">
+            <img src="images/fu.png" alt="">
+        </div>
+
+        <!-- 4楼 美容珠宝 -->
+        <div class="fourth-floor" id="fourth_floor">
+            <img src="images/mei.png" alt="">
+        </div>
+
+        <!-- 5楼 居家生活 -->
+        <div class="fiveth-floor" id="fiveth_floor">
+            <img src="images/bottom.png" alt="">
+        </div>
+    </div>
+</body>
+</html>
+<script src="../jquery-3.4.1.min.js"></script>
+<script>
+    $(function(){
+        // 当前楼层
+        var current_floor = 0;
+
+        // 各个楼层的高度
+        var floors = [
+            0,
+            404,
+            412,
+            414,
+            411,
+            400,
+            400,
+            400,
+            400];
+
+        // 各个楼层滚动过的高度
+        var floors_top = [
+            1095,
+            1095 + 404,
+            1095 + 404 + 412,
+            1095 + 404 + 412 + 414,
+            1095 + 404 + 412 + 414 + 411,
+            1095 + 404 + 412 + 414 + 411 + 400,
+            1095 + 404 + 412 + 414 + 411 + 400 + 400,
+            1095 + 404 + 412 + 414 + 411 + 400 + 400 + 400,
+            1095 + 404 + 412 + 414 + 411 + 400 + 400 + 400 + 400];
+
+        // 鼠标移动到侧边栏显示指定的楼层标题
+        $("#floor_list li").hover(function(){
+            $(this).children("p").show();
+        },function(){
+            if($(this).index() != current_floor - 1){
+                $(this).children("p").hide();
+            }
+        })
+
+        // 鼠标点击侧边栏回到指定楼层
+        $("#floor_list li").click(function(){
+            var top = getScrollTopWithFloorIndex($(this).index()) - $(window).height() + floors[$(this).index()] * 0.5;
+
+            if($(this).index() == 8){
+                // 点击返回顶部
+                top = 0;
+            }
+            
+            $("html,body").animate({"scrollTop": top},'slow');
+        })
+
+        // 页面滚动
+        $(window).scroll(function(){
+            // 滚动过程中侧边栏保持不动
+            setSiderbarTop();
+
+            // 当前所在楼层
+            var $floor_lis = $("#floor_list li");
+            var currentFloorIndex = getCurrentFloor();
+            // 记录当前楼层
+            current_floor = currentFloorIndex;
+
+            // 先隐藏所有的楼层指示
+            $floor_lis.children("p").hide();
+
+            // 显示当前楼层
+            if(currentFloorIndex != 0){
+                $floor_lis.eq(currentFloorIndex - 1).children("p").show();
+            }
+        })
+
+        // 设置侧边栏位置
+        setSiderbarTop();
+        function setSiderbarTop(){
+            var scroll_top = $(document).scrollTop();
+            if (scroll_top == 0){
+                $("#siderbar").hide();
+            }else {
+                $("#siderbar").show();
+            }
+
+            $("#siderbar").css("top",  scroll_top + 200);
+        }
+
+        // 判断滚动到几楼
+        function getCurrentFloor(){
+            // 判断是否滚动到几楼
+            var height = $(document).scrollTop() + $(window).height();
+            if(height < floors_top[0]){
+                // 在顶部
+                return 0;
+            }else if(height < floors_top[1]){
+                //在1楼
+                return 1;
+            }else if(height < floors_top[2]){
+                // 在2楼
+                return 2;
+            }else if(height < floors_top[3]){
+                // 在3楼
+                return 3;
+            }else if(height < floors_top[4]){
+                // 在4楼
+                return 4;
+            }else if (height < floors_top[5]){
+                // 在5楼
+                return 5;
+            }else if (height < floors_top[6]){
+                // 在6楼
+                return 6;
+            }else if (height < floors_top[7]){
+                // 在7楼
+                return 7;
+            }else if(height < floors_top[8]){
+                // 在8楼
+                return 8;
+            }else {
+                // 底部
+                return 9;
+            }
+        }
+
+        // 获取指定楼层滚动到的位置
+        function getScrollTopWithFloorIndex(floor){
+            return floors_top[floor];
+        }
+    })
+</script>

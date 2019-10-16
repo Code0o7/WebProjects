@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>手风琴效果</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		.box {
+			width: 1646px;
+			height: 460px;
+			margin: 100px auto;
+			overflow: hidden;
+		}
+
+		.image {
+			float: left;
+			width: 325px;
+			height: 460px;
+			cursor: pointer;
+		}
+	</style>
+
+	<script type="text/javascript" src="../Base.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			// 获取所有图片
+			var images = $("box").children;
+
+			// 鼠标经过图片
+			for(var i = 0; i < images.length; i++ ){
+
+				// 记录索引
+				images[i].index = i;
+
+				// 鼠标移到图片上
+				images[i].onmouseover = function(){
+
+					// 其他所有图片变小
+					for(var j = 0; j < images.length; j++ ){
+						slowAnimate(images[j],{width:100});
+					}
+					
+					// 当前图片大小放大
+					slowAnimate(this,{width:1226});
+				}
+
+				// 鼠标离开图片
+				images[i].onmouseout = function(){
+					// 所有图片恢复初始大小
+					for(var k = 0; k < images.length; k++ ){
+						slowAnimate(images[k],{width:325});
+					}
+
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="box" id="box">
+		<div class="image" id="image" style="background: url('images/1.jpg')"></div>
+		<div class="image" id="image" style="background: url('images/2.jpg')"></div>
+		<div class="image" id="image" style="background: url('images/3.jpg')"></div>
+		<div class="image" id="image" style="background: url('images/4.jpg')"></div>
+		<div class="image" id="image" style="background: url('images/5.jpg')"></div>
+	</div>
+</body>
+</html>

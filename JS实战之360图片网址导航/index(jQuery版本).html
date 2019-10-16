@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>360网址导航</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+        .box {
+            width: 764px;
+            height: 282px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+        }
+
+        .box li {
+            float: left;
+            width: 178px;
+            height: 125px;
+            margin-left: 10px;
+            margin-top: 10px;
+            border: 1px solid #eee;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .bottom-bar {
+            width: 178px;
+            height: 20px;
+            color: #fff;
+            position: absolute;
+            bottom: -20;
+            font-size: 14px;
+            text-align: center;
+            background: url(images/bg.png) no-repeat 5px -2px;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box">
+            <ul>
+                <li><img src="images/01.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+                <li><img src="images/02.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+                <li><img src="images/03.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+                <li><img src="images/04.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+
+                <li><img src="images/05.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+                <li><img src="images/06.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+                <li><img src="images/07.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+                <li><img src="images/08.JPG" alt="">
+                    <div class="bottom-bar" id="bottom_bar">百度一下，你就知道</div>
+                </li>
+            </ul>
+    </div>
+</body>
+</html>
+<script src="../jquery-3.4.1.min.js"></script>
+<script>
+    $(function(){
+        // 设置下边透明条图片
+        $("#box #bottom_bar").css("background-position",function(index,value){
+            return "5px " + (-index * 25 - 2) + "px";
+        })
+
+        // 鼠标经过的时候底部栏显示
+        $(".box li").mouseenter(function(){
+            $(this).children("#bottom_bar").animate({"bottom":0},300);
+            $(this).siblings().children("#bottom_bar").animate({"bottom":-20},300);
+        }).mouseleave(function(){
+            $(this).children("#bottom_bar").animate({"bottom":-20},300);
+        })
+    })
+</script>

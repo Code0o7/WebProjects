@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>轮播图</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		ul,ol {
+			list-style: none;
+		}
+
+		ul {
+			width: 3030px;
+			height: 200px;
+			position: absolute;
+			left: 0;
+		}
+		.box {
+			width: 510px;
+			height: 200px;
+			border: 1px solid #ccc;
+			margin: 100px auto;
+			position: relative;
+			padding: 5px 0;
+			overflow: hidden;
+		}
+
+		.ul li {
+			width: 500px;
+			height: 200px;
+			margin-left: 5px;
+			float: left;
+		}
+
+		.ol {
+			position: absolute;
+			right: 10px;
+			bottom: 10px;
+		}
+
+		.ol li {
+			float: left;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			background-color: #fff;
+			text-align: center;
+			margin-right: 5px;
+			cursor: pointer;
+		}
+	</style>
+	<script type="text/javascript" src="../Base.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			// 动态创建ol list
+			var ul = $("ul");
+			var ul_lists = ul.children;
+			var ol = $("ol");
+			var ol_lists = ol.children;
+			var box = $("box");
+
+			var leader = 0, target = 0, currentIndex = 0, global_timer = null;
+
+			// 创建ol li
+			createOlLi()
+			function createOlLi(){
+				for(var i = 0; i < ul_lists.length - 1; i++){
+					var ol_li = document.createElement("li");
+					ol_li.innerHTML = i + 1;
+					ol_li.style.backgroundColor =  i == currentIndex ? "#ccc" : "#fff";
+					ol.appendChild(ol_li);
+				}
+			}
+
+			// 手动控制滚动
+			scrollImg();
+			function scrollImg(){
+				for(var i = 0; i < ol_lists.length; i++){
+					ol_lists[i].index = i;
+
+					// 鼠标放到ol上 图片滚动
+					ol_lists[i].onmouseover = function(){
+						currentIndex = this.index;
+
+						changeOlStyle();
+					}
+				}
+
+				// 停止自动滚动
+				box.onmouseover = function(){
+					clearInterval(global_timer);
+				}
+				// 开启自动滚动
+				box.onmouseout = function(){
+					openAutoScroll();
+				}
+			}
+
+			// 开启自动滚动
+			openAutoScroll();
+			function openAutoScroll(){
+				global_timer = setInterval(function(){
+					currentIndex++;
+					if (currentIndex == ul_lists.length) {
+						ul.style.left = 0;
+						currentIndex = 1;
+						leader = 0;
+					}
+
+					changeOlStyle();
+				},2000)
+			}
+
+			// 计算target 修改ol style
+			function changeOlStyle(){
+				// 计算目标位置 
+				target = -(currentIndex * ul_lists[currentIndex].offsetWidth + currentIndex * 5);
+
+				// 恢复所有ol li的背景色
+				for(var j = 0; j < ol_lists.length; j++){
+					 ol_lists[j].style.backgroundColor = "#fff";
+				}
+
+				// 设置当前ol li背景色
+				var index = currentIndex > ol_lists.length - 1 ? 0 : currentIndex;
+				ol_lists[index].style.backgroundColor = "#ccc";
+			}
+			
+
+			// 缓动动画
+			setInterval(function(){
+				leader = leader + (target - leader) /10;
+
+				ul.style.left = leader + "px";
+			},10)
+		}
+
+		
+	</script>
+</head>
+<body>
+	<div class="box" id="box">
+		<ul class="ul" id="ul">
+			<li><img src="images/1.jpg"></li>
+			<li><img src="images/2.jpg"></li>
+			<li><img src="images/3.jpg"></li>
+			<li><img src="images/4.jpg"></li>
+			<li><img src="images/5.jpg"></li>
+			<li><img src="images/1.jpg"></li>
+		</ul>
+		<ol class="ol" id="ol">
+		</ol>
+	</div>
+</body>
+</html>

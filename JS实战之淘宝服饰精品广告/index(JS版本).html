@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>淘宝服饰广告</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        ul {
+            list-style: none;
+        }
+        .box {
+            width: 300px;
+            height: 251px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .left-list {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .right-list {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .left-list li,.right-list li {
+            width: 48px;
+            height: 27px;
+            line-height: 28px;
+            background: url("images/lili.jpg") repeat-x;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        .box ul a {
+            display: block;
+            width: 48px;
+            height: 27px;
+            font-size: 12px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .box ul a:hover{
+            background-color: rgb(151, 7, 7);
+            color: #fff;
+        }
+
+        .left-list li{
+            border-left: none;
+        }
+
+        .right-list li {
+            border-right: none;
+        }
+
+        .picture {
+            width: 200px;
+            height: 250px;
+            background: url("images/女靴.jpg") no-repeat;
+            margin-left: 50px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="box" id="box">
+        <div class="picture" id="picture"></div>
+        <ul id="left_list" class="left-list"></ul>
+        <ul id="right_list" class="right-list"></ul>
+    </div>
+</body>
+</html>
+<script src="../Base.js"></script>
+<script>
+    window.onload = function(){
+        var left_texts = ["女靴","雪地靴","冬裙","呢大衣","毛衣","棉服","女裤","羽绒服","牛仔裤"];
+        var right_texts = ["女包","男包","登山鞋","皮带","围巾","皮衣","男毛衣","男棉服","男靴"];
+
+        var left_ul = $("left_list");
+        var right_ul = $("right_list");
+
+        // 添加li 
+        for(var i = 0; i < left_texts.length; i++){
+            // 添加左边li
+            var left_li = document.createElement("li");
+            left_li.innerHTML = "<a href='javascript;:'>" + left_texts[i] + "</a>";
+            left_ul.appendChild(left_li);
+
+            // 添加右边li
+            var right_li = document.createElement("li");
+            right_li.innerHTML = "<a href='javascript;:'>" + right_texts[i] + "</a>";
+            right_ul.appendChild(right_li);
+        }
+
+        // 鼠标经过li 切换图片
+        var lis = document.getElementsByTagName("li");
+        for(var j = 0; j < lis.length; j++ ){
+            lis[j].onmouseover = function(){
+                var text = this.children[0].innerHTML;
+                $("picture").style.background = "url(images/" + text + ".jpg) no-repeat";
+            }
+        }
+    }
+</script>
